@@ -6,7 +6,7 @@
 proxy-providers:
 
   自建:
-    url: "https://no.1.lyux1n.com:2096/clash/sgght0swa0qmv8qv"
+    url: "机场地址"
     type: http
     interval: 86400
     health-check:
@@ -15,7 +15,7 @@ proxy-providers:
       interval: 180
     proxy: 直连
   同行:
-    url: "http://45.143.234.163:2096/sub/1tx41Y9r?format=clash"
+    url: "机场地址"
     type: http
     interval: 86400
     health-check:
