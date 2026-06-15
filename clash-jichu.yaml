@@ -5,15 +5,24 @@
 # 机场节点订阅
 proxy-providers:
 
-  机场备注:
-    url: "机场地址"
+  自建:
+    url: "机场"
     type: http
     interval: 86400
     health-check:
       enable: true
       url: http://www.gstatic.com/generate_204
       interval: 180
-    proxy: 直连
+    proxy: ⚡ 所有-自动
+  同行:
+    url: "机场"
+    type: http
+    interval: 86400
+    health-check:
+      enable: true
+      url: http://www.gstatic.com/generate_204
+      interval: 180
+    proxy: DIRECT
 
 # ========================
 # 主要端口设置
@@ -45,10 +54,10 @@ dns:
     - 223.5.5.5
   fake-ip-filter-mode: blacklist
   fake-ip-filter:
-     - +.lan
-     - +.local
-     - geosite:cn
-
+    - +.lan
+    - +.local
+    - geosite:cn
+     
 ipv6: true
 
 # ========================
@@ -56,7 +65,7 @@ ipv6: true
 # ========================
 tun:
   enable: true
-  stack: gvisor
+  stack: system
   device: utun
   endpoint-independent-nat: true
   auto-route: false
@@ -90,6 +99,15 @@ default: &default
 #                 业务分流组
 # ========================================================
 proxy-groups:
+  - name: 直连
+    type: select
+    proxies:
+     - DIRECT
+  - name: 拒绝
+    type: select
+    proxies:
+      - REJECT     
+
   # 测试与广告拦截菜单
   - {name: 🧪 Test, <<: *default}
   - {name: 🚫 Block, <<: *default}
@@ -122,18 +140,18 @@ proxy-groups:
     type: url-test
     include-all: true
     tolerance: 50
-    interval: 300
+    interval: 180
     filter: "^((?!(直连|拒绝)).)*$"
 
 
   # 香港组
   - name: 🇭🇰 香港-故转
     type: fallback
-    interval: 300
+    interval: 180
     lazy: false
     proxies:
-      - 🇭🇰 香港-手动
-      - 🇭🇰 香港-自动
+     - 🇭🇰 香港-手动
+     - 🇭🇰 香港-自动
   
   - name: 🇭🇰 香港-手动
     type: select
@@ -144,13 +162,13 @@ proxy-groups:
     type: url-test
     include-all: true
     tolerance: 50
-    interval: 300
+    interval: 180
     filter: "(?=.*(广港|香港|HK|Hong Kong|🇭🇰|HongKong)).*$"
     
   # 日本组
   - name: 🇯🇵 日本-故转
     type: fallback
-    interval: 300
+    interval: 180
     lazy: false
     proxies:
       - 🇯🇵 日本-手动
@@ -158,24 +176,24 @@ proxy-groups:
   
   - name: 🇯🇵 日本-手动
     type: select
-    proxies:
-      - hysteria2-33752
-      - vless-56270
-      - trojan-47494
+    use:
+      - 自建
+      - 同行
+    filter: "^(hysteria2-33752|vless-56270|trojan-47494)$"
     
   - name: 🇯🇵 日本-自动
     type: url-test
     tolerance: 50
-    interval: 300
-    proxies:
-      - hysteria2-33752
-      - vless-56270
-      - trojan-47494
+    interval: 180
+    use:
+      - 自建
+      - 同行
+    filter: "^(hysteria2-33752|vless-56270|trojan-47494)$"
 
   # 美国组
   - name: 🇺🇸 美国-故转
     type: fallback
-    interval: 300
+    interval: 180
     lazy: false
     proxies:
       - 🇺🇸 美国-手动
@@ -190,29 +208,36 @@ proxy-groups:
     type: url-test
     include-all: true
     tolerance: 50
-    interval: 300
+    interval: 180
     filter: "(?=.*(广美|美|US|纽约|波特兰|达拉斯|俄勒|凤凰城|费利蒙|拉斯|洛杉|圣何塞|圣克拉|西雅|芝加|🇺🇸|United States)).*$"
-
 
   # 其他组
   - name: 🌍 其他-故转
     type: fallback
-    interval: 300
+    interval: 180
     lazy: false
     proxies:
       - 🌍 其他-手动
       - 🌍 其他-自动
+
+
   - name: 🌍 其他-手动
     type: select
-    include-all: true
-    filter: "^((?!(直连|拒绝|广港|香港|HK|Hong Kong|🇭🇰|HongKong|广台|台湾|广日|日本|JP|川日|东京|大阪|泉日|埼玉|沪日|深日|🇯🇵|Japan|广美|美|US|纽约|波特兰|达拉斯|俄勒|凤凰城|费利蒙|拉斯|洛杉|圣何塞|圣克拉|西雅|芝加|🇺🇸|United States)).)*$"
+    proxies:
+      - 直连
+      - 拒绝                     
+      - 🚀 所有-手动            
+      - ⚡ 所有-自动           
+      - 🇺🇸 美国-自动             
+      - 🇯🇵 日本-自动             
   
   - name: 🌍 其他-自动
     type: url-test
-    include-all: true
     tolerance: 50
-    interval: 300
-    filter: "^((?!(直连|拒绝|广港|香港|HK|Hong Kong|🇭🇰|HongKong|广台|台湾|广日|日本|JP|川日|东京|大阪|泉日|埼玉|沪日|深日|🇯🇵|Japan|广美|美|US|纽约|波特兰|达拉斯|俄勒|凤凰城|费利蒙|拉斯|洛杉|圣何塞|圣克拉|西雅|芝加|🇺🇸|United States)).)*$"
+    interval: 180
+    proxies:                               
+      - 🇺🇸 美国-自动             
+      - 🇯🇵 日本-自动 
 
 # ========================
 # 规则引擎-rules
