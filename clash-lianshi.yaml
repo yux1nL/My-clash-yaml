@@ -28,14 +28,14 @@ proxies:
   - {name: 直连, type: direct}
   - {name: 拒绝, type: reject}
 
-  - name: 美国-住宅落地   # 落地节点命名
+  - name: 🇺🇸 美国-住宅落地   # 落地节点命名
     type: socks5      # 节点协议
     server:            # 住宅IP 代理地址
     port:              # 端口号
     username:         # 用户名
     password:         # 密码
     udp: true
-    dialer-proxy: 日本-链式前置  # 指定前置代理节点组
+    dialer-proxy: 🇯🇵 日本-链式前置  # 指定前置代理节点组
 
 # ========================
 # 主要端口设置
@@ -213,10 +213,10 @@ proxy-groups:
 
   - name: 🇺🇸 美国-手动
     type: select
+    proxies:
+      - 🇺🇸 美国-住宅落地
     include-all: true
     filter: "(?=.*(广美|美|US|纽约|波特兰|达拉斯|俄勒|凤凰城|费利蒙|拉斯|洛杉|圣何塞|圣克拉|西雅|芝加|🇺🇸|United States)).*$"
-    proxies:
-      - 美国-住宅落地
 
   - name: 🇺🇸 美国-自动
     type: url-test
@@ -224,8 +224,6 @@ proxy-groups:
     tolerance: 50
     interval: 300
     filter: "(?=.*(广美|美|US|纽约|波特兰|达拉斯|俄勒|凤凰城|费利蒙|拉斯|洛杉|圣何塞|圣克拉|西雅|芝加|🇺🇸|United States)).*$"
-    proxies:
-      - 美国-住宅落地 
 
   # 其他组
   - name: 🌍 其他-故转
