@@ -1,14 +1,21 @@
 # ========================
-
-# openclash-链式代理精简版
+# openclash-链式代理版
 # ========================
 
 # 机场节点订阅
-
 proxy-providers:
 
-  机场备注:
-    url: "机场地址"
+  自建:
+    url: "https://no.1.lyux1n.com:2096/clash/sgght0swa0qmv8qv"
+    type: http
+    interval: 86400
+    health-check:
+      enable: true
+      url: http://www.gstatic.com/generate_204
+      interval: 180
+    proxy: 直连
+  同行:
+    url: "http://45.143.234.163:2096/sub/1tx41Y9r?format=clash"
     type: http
     interval: 86400
     health-check:
@@ -17,12 +24,11 @@ proxy-providers:
       interval: 180
     proxy: 直连
 
-
 proxies:
   - {name: 直连, type: direct}
   - {name: 拒绝, type: reject}
 
-  - name: 美国-住宅落地-日本前置   # 落地节点命名
+  - name: 美国-住宅落地   # 落地节点命名
     type: socks5      # 节点协议
     server:            # 住宅IP 代理地址
     port:              # 端口号
@@ -84,7 +90,6 @@ profile:
   store-selected: true
   store-fake-ip: true
  
-
 # ========================
 # 策略组定义
 # ========================
@@ -92,16 +97,16 @@ default: &default
   type: select
   proxies:
     - 直连
-    - 所有-手动
-    - 所有-自动
-    - 香港-手动
-    - 香港-故转
-    - 日本-手动
-    - 日本-故转
-    - 日本-链式前置
-    - 美国-手动
-    - 美国-故转
-    - 其他-故转
+    - 🚀 所有-手动
+    - ⚡ 所有-自动
+    - 🇭🇰 香港-手动
+    - 🇭🇰 香港-故转
+    - 🇯🇵 日本-手动
+    - 🇯🇵 日本-故转
+    - 🇯🇵 日本-链式前置
+    - 🇺🇸 美国-手动
+    - 🇺🇸 美国-故转
+    - 🌍 其他-故转
     - 拒绝
 
 # ========================================================
@@ -109,62 +114,63 @@ default: &default
 # ========================================================
 proxy-groups:
   # 测试与广告拦截菜单
-  - {name: Test, <<: *default}
-  - {name: Block, <<: *default}
+  - {name: 🧪 Test, <<: *default}
+  - {name: 🚫 Block, <<: *default}
   # AI独立控制菜单
-  - {name: ChatGPT, <<: *default}
-  - {name: MyAI, <<: *default}      
+  - {name: 🤖 ChatGPT, <<: *default}
+  - {name: 🧠 MyAI, <<: *default}      
   # 基础大厂与开发服务菜单
-  - {name: GitHub, <<: *default}
-  - {name: Apple, <<: *default}
-  - {name: Google, <<: *default}
-  - {name: Microsoft, <<: *default}
+  - {name: 🐱 GitHub, <<: *default}
+  - {name: 🍏 Apple, <<: *default}
+  - {name: 🔍 Google, <<: *default}
+  - {name: 💻 Microsoft, <<: *default}
   # 购物与海淘独立控制菜单
-  - {name: Shopping, <<: *default}
+  - {name: 🛍️ Shopping, <<: *default}
   # 国际核心流媒体独立控制菜单
-  - {name: Netflix, <<: *default}
-  - {name: GlobalMedia, <<: *default}  
+  - {name: 🎥 Netflix, <<: *default}
+  - {name: 📹 GlobalMedia, <<: *default}  
   # 游戏专区菜单
-  - {name: Steam, <<: *default}
-    # 兜底与全局分流菜单
-  - {name: 国外, <<: *default}        
-  - {name: 国内, <<: *default}
-  - {name: 其他, <<: *default}
+  - {name: 🎮 Steam, <<: *default}
+  # 兜底与全局分流菜单
+  - {name: 🛑 国外, <<: *default}        
+  - {name: 🇨🇳 国内, <<: *default}
+  - {name: ⚓ 其他, <<: *default}
 
-  - name: 所有-手动
+  - name: 🚀 所有-手动
     type: select
     include-all: true
     filter: "^((?!(直连|拒绝)).)*$"
 
-  - name: 所有-自动
+  - name: ⚡ 所有-自动
     type: url-test
     include-all: true
     tolerance: 50
     interval: 300
     filter: "^((?!(直连|拒绝)).)*$"
 
-  #  日本链式代理-前置组 
-  - name: 日本-链式前置
+#  日本链式代理-前置组 
+  - name: 🇯🇵 日本-链式前置
     type: select
-    include-all: true
-    filter: "(?=.*(广日|日本|JP|川日|东京|大阪|泉日|局日|沪日|深日|🇯🇵|Japan)).*$"
     proxies:
+    - hysteria2-55752
+    - vless-56270
+    - trojan-47494
 
   # 香港组
-  - name: 香港-故转
+  - name: 🇭🇰 香港-故转
     type: fallback
     interval: 300
     lazy: false
     proxies:
-      - 香港-手动
-      - 香港-自动
+      - 🇭🇰 香港-手动
+      - 🇭🇰 香港-自动
   
-  - name: 香港-手动
+  - name: 🇭🇰 香港-手动
     type: select
     include-all: true
     filter: "(?=.*(广港|香港|HK|Hong Kong|🇭🇰|HongKong)).*$"
     
-  - name: 香港-自动
+  - name: 🇭🇰 香港-自动
     type: url-test
     include-all: true
     tolerance: 50
@@ -172,71 +178,69 @@ proxy-groups:
     filter: "(?=.*(广港|香港|HK|Hong Kong|🇭🇰|HongKong)).*$"
     
   # 日本组
-  - name: 日本-故转
+  - name: 🇯🇵 日本-故转
     type: fallback
     interval: 300
     lazy: false
     proxies:
-      - 日本-手动
-      - 日本-自动
+      - 🇯🇵 日本-手动
+      - 🇯🇵 日本-自动
   
-  - name: 日本-手动
+  - name: 🇯🇵 日本-手动
     type: select
-    include-all: true
-    filter: "(?=.*(广日|日本|JP|川日|东京|大阪|泉日|局日|沪日|深日|🇯🇵|Japan)).*$"
     proxies:
       - hysteria2-33752
       - vless-56270
       - trojan-47494
     
-  - name: 日本-自动
+  - name: 🇯🇵 日本-自动
     type: url-test
     tolerance: 50
     interval: 300
-    include-all: true
-    filter: "(?=.*(广日|日本|JP|川日|东京|大阪|泉日|局日|沪日|深日|🇯🇵|Japan)).*$"
     proxies:
       - hysteria2-33752
       - vless-56270
       - trojan-47494
 
   # 美国组
-  - name: 美国-故转
+  - name: 🇺🇸 美国-故转
     type: fallback
     interval: 300
     lazy: false
     proxies:
-      - 美国-手动
-      - 美国-自动
-  - name: 美国-手动
+      - 🇺🇸 美国-手动
+      - 🇺🇸 美国-自动
+
+  - name: 🇺🇸 美国-手动
     type: select
     include-all: true
     filter: "(?=.*(广美|美|US|纽约|波特兰|达拉斯|俄勒|凤凰城|费利蒙|拉斯|洛杉|圣何塞|圣克拉|西雅|芝加|🇺🇸|United States)).*$"
     proxies:
-      - 美国-住宅落地-日本前置
-  - name: 美国-自动
+      - 美国-住宅落地
+
+  - name: 🇺🇸 美国-自动
     type: url-test
     include-all: true
     tolerance: 50
     interval: 300
     filter: "(?=.*(广美|美|US|纽约|波特兰|达拉斯|俄勒|凤凰城|费利蒙|拉斯|洛杉|圣何塞|圣克拉|西雅|芝加|🇺🇸|United States)).*$"
     proxies:
-      - 美国-住宅落地-日本前置 
+      - 美国-住宅落地 
 
   # 其他组
-  - name: 其他-故转
+  - name: 🌍 其他-故转
     type: fallback
     interval: 300
     lazy: false
     proxies:
-      - 其他-手动
-      - 其他-自动
-  - name: 其他-手动
+      - 🌍 其他-手动
+      - 🌍 其他-自动
+  - name: 🌍 其他-手动
     type: select
     include-all: true
     filter: "^((?!(直连|拒绝|广港|香港|HK|Hong Kong|🇭🇰|HongKong|广台|台湾|广日|日本|JP|川日|东京|大阪|泉日|埼玉|沪日|深日|🇯🇵|Japan|广美|美|US|纽约|波特兰|达拉斯|俄勒|凤凰城|费利蒙|拉斯|洛杉|圣何塞|圣克拉|西雅|芝加|🇺🇸|United States)).)*$"
   
-  - name: 其他-自动
+  - name: 🌍 其他-自动
     type: url-test
     include-all: true
     tolerance: 50
@@ -248,37 +252,37 @@ proxy-groups:
 # ========================
 rules:
   # 1. 测试与广告拦截 (最高优先级)
-  - RULE-SET,TEST / Domain,Test
-  - RULE-SET,Block / Domain,Block  
+  - RULE-SET,TEST / Domain,🧪 Test
+  - RULE-SET,Block / Domain,🚫 Block  
   # 2. 人工智能与大模型 (AI)
-  - RULE-SET,ChatGPT / Domain,ChatGPT
-  - RULE-SET,MyAI / Domain,MyAI          
+  - RULE-SET,ChatGPT / Domain,🤖 ChatGPT
+  - RULE-SET,MyAI / Domain,🧠 MyAI          
   # 3. 购物与海淘
-  - RULE-SET,Shopping / Domain,Shopping
+  - RULE-SET,Shopping / Domain,🛍️ Shopping
   # 4. 基础大厂与系统服务
-  - RULE-SET,GitHub / Domain,GitHub
-  - RULE-SET,Apple-Custome / Domain,Apple
+  - RULE-SET,GitHub / Domain,🐱 GitHub
+  - RULE-SET,Apple-Custome / Domain,🍏 Apple
   - RULE-SET,Apple-CN / Domain,DIRECT     # 苹果国内服务直连
-  - RULE-SET,Apple / Domain,Apple 
-  - RULE-SET,Microsoft / Domain,Microsoft
-  - RULE-SET,Google / Domain,Google
-  - RULE-SET,Google / IP,Google,no-resolve
+  - RULE-SET,Apple / Domain,🍏 Apple 
+  - RULE-SET,Microsoft / Domain,💻 Microsoft
+  - RULE-SET,Google / Domain,🔍 Google
+  - RULE-SET,Google / IP,🔍 Google,no-resolve
   # 5. 国际核心流媒体
-  - RULE-SET,Netflix / Domain,Netflix
-  - RULE-SET,Netflix / IP,Netflix,no-resolve
-  - RULE-SET,GlobalMedia / Domain,GlobalMedia 
+  - RULE-SET,Netflix / Domain,🎥 Netflix
+  - RULE-SET,Netflix / IP,🎥 Netflix,no-resolve
+  - RULE-SET,GlobalMedia / Domain,📹 GlobalMedia 
   # 6. 游戏平台
-  - RULE-SET,Steam / Domain,Steam      
+  - RULE-SET,Steam / Domain,🎮 Steam      
   # 7. 兜底与区域大类分流 
-  - RULE-SET,Proxy / Domain,国外
-  - RULE-SET,Globe / Domain,国外  
+  - RULE-SET,Proxy / Domain,🛑 国外
+  - RULE-SET,Globe / Domain,🛑 国外  
   # 国内直连与本地局域网
-  - RULE-SET,Direct / Domain,国内
-  - RULE-SET,China / Domain,国内
-  - RULE-SET,China / IP,国内,no-resolve
-  - RULE-SET,Private / Domain,国内
+  - RULE-SET,Direct / Domain,🇨🇳 国内
+  - RULE-SET,China / Domain,🇨🇳 国内
+  - RULE-SET,China / IP,🇨🇳 国内,no-resolve
+  - RULE-SET,Private / Domain,🇨🇳 国内
   # 最终兜底
-  - MATCH,其他
+  - MATCH,⚓ 其他
 
 # ========================
 # 规则集提供者
