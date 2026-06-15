@@ -119,7 +119,7 @@ proxy-groups:
   - {name: Apple, <<: *default}
   - {name: Google, <<: *default}
   - {name: Microsoft, <<: *default}
-  # 🛍️ 购物与海淘独立控制菜单
+  # 购物与海淘独立控制菜单
   - {name: Shopping, <<: *default}
   # 国际核心流媒体独立控制菜单
   - {name: Netflix, <<: *default}
