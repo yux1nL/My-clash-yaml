@@ -1,5 +1,4 @@
 # ========================
-
 # openclash-链式代理版
 # ========================
 
@@ -31,10 +30,10 @@ proxies:
 
   - name: 住宅落地   # 落地节点命名
     type: socks5      # 节点协议
-    server: 204.1.74.43     # 住宅IP 代理地址
+    server:      # 住宅IP 代理地址
     port: 7069             # 端口号
-    username: fgRGE1F819wA        # 用户名
-    password: Ch4dTTeRHWFq       # 密码
+    username:         # 用户名
+    password:        # 密码
     udp: true
     dialer-proxy: 🇯🇵 日本-链式前置  # 指定前置代理节点组
 
@@ -71,6 +70,9 @@ dns:
     - +.lan
     - +.local
     - geosite:cn
+# 用于自建的域名不可直连的解决方案 按需求取消注释    
+#  nameserver-policy:
+#    no.1.lyux1n.com: 223.5.5.5
 
 ipv6: true
 
