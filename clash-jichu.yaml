@@ -57,6 +57,9 @@ dns:
     - +.lan
     - +.local
     - geosite:cn
+# 用于自建的域名不可直连的解决方案 按需求取消注释    
+#  nameserver-policy:
+#    no.1.lyux1n.com: 223.5.5.5
      
 ipv6: true
 
