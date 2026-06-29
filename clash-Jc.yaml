@@ -5,7 +5,7 @@
 proxy-providers:
 
   美建:
-    url: "https://ljlsjvps.lyux1n.com:2096/Clash/s5wtxdsqvnxqodoi"
+    url: "订阅"
     type: http
     interval: 86400
     health-check:
@@ -14,7 +14,7 @@ proxy-providers:
       interval: 180
     proxy: DIRECT
   美住:
-    url: "https://n1yxl.lyux1n.com:2096/clash/t0aldywtpf840a3s"
+    url: "订阅"
     type: http
     interval: 86400
     health-check:
@@ -23,7 +23,7 @@ proxy-providers:
       interval: 180
     proxy: DIRECT
   日本:
-    url: "http://45.143.234.163:2096/sub/1tx41Y9r?format=clash"
+    url: "订阅"
     type: http
     interval: 86400
     health-check:
